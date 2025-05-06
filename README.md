@@ -19,4 +19,4 @@ Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11.
 2. ⚠ PARA QUE LA HERRAMIENTA FUNCIONE. MODIFIQUE EL VALOR DE LA VARIABLE "BROADCAST_IP" EN EL ARCHIVO docker-compose.yml. ESPECIFIQUE AHÍ LA DIRECCIÓN BROADCAST DE SU RED. ⚠
 3. Asegurese que los servicios Docker estén activos.
 4. Abra una terminal CMD en la carpeta principal de la herramienta y levante el Docker usando: docker compose up --build
-5. Si todo se ha instalado correctamente. Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo
+5. Si todo se ha instalado correctamente. Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo, debería ver el panel de control.
