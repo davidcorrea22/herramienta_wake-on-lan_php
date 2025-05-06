@@ -15,7 +15,8 @@ Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11.
     - netsh advfirewall firewall add rule name="Abrir puerto 80" dir=in action=allow protocol=TCP localport=80
 
 # INSTALACIÓN
-1. ⚠ PARA QUE LA HERRAMIENTA FUNCIONE. MODIFIQUE EL VALOR DE LA VARIABLE "BROADCAST_IP" EN EL ARCHIVO docker-compose.yml. ESPECIFIQUE AHÍ LA DIRECCIÓN BROADCAST DE SU RED. ⚠
-2. Asegurese que los servicios Docker estén activos.
-3. Abra una terminal CMD en la carpeta principal de la herramienta y levante el Docker usando: docker compose up --build
-4. Si todo se ha instalado correctamente. Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo
+1. Se recomienda descomprimir la herramienta en la raiz del sistema.
+2. ⚠ PARA QUE LA HERRAMIENTA FUNCIONE. MODIFIQUE EL VALOR DE LA VARIABLE "BROADCAST_IP" EN EL ARCHIVO docker-compose.yml. ESPECIFIQUE AHÍ LA DIRECCIÓN BROADCAST DE SU RED. ⚠
+3. Asegurese que los servicios Docker estén activos.
+4. Abra una terminal CMD en la carpeta principal de la herramienta y levante el Docker usando: docker compose up --build
+5. Si todo se ha instalado correctamente. Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo
