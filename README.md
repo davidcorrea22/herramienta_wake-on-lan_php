@@ -1,6 +1,7 @@
 # HERRAMIENTA WAKE ON LAN + PHP + PYTHON
-Esta es una herramienta online creada para encender equipos de forma remota con el protocolo Wake-on-LAN y los lenguajes PHP y Python.
-La herramienta crea una página web en el puerto 80 que actúa como panel de control.
+Esta es una herramienta online creada para encender equipos de forma remota usando el protocolo Wake-on-LAN y los lenguajes PHP y Python.
+La herramienta crea una página web en el puerto 80 que actúa como panel de control, esta es accesible desde todos los equipos con conectividad al servidor.
+Esto incluye también dispositivos móviles.
 Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la carpeta zip se descomprima en C:\PROYECTO_WOL.
 
 # REQUISITOS
@@ -10,7 +11,7 @@ Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la
     - Al menos un cliente: No necesitan ninguna instalación.
     - El cliente debe estar configurado para recibir páquetes mágicos: https://www.xataka.com/basics/wake-on-lan-que-como-configurarlo-windows-10
 
-- Habilite el puerto 80 en CMD con este comando: netsh advfirewall firewall add rule name="Abrir puerto 80" dir=in action=allow protocol=TCP localport=80
+- Habilite el puerto 80 en el equipo servidor. Puede usar este comando: netsh advfirewall firewall add rule name="Abrir puerto 80" dir=in action=allow protocol=TCP localport=80
 - Aseguresé de instalar este repositorio: git clone https://github.com/davidcorrea22/herramienta_wake-on-lan_php
 
 # INSTALACIÓN
