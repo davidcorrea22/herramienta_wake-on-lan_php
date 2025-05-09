@@ -18,7 +18,7 @@ Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la
 - ⚠ PARA QUE LA HERRAMIENTA FUNCIONE. CAMBIE EL VALOR DE "BROADCAST_IP" EN EL ARCHIVO docker-compose.yml (línea 29). ESPECIFIQUE AHÍ LA DIRECCIÓN BROADCAST DE SU RED. ⚠
 - Asegurese que Docker esté activo.
 - Abra una terminal CMD, dirigase a C:\PROYECTO_WOL y levante el Docker usando: docker compose up --build
-- Si todo se ha instalado correctamente. Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo, debería ver el panel de control.
+- Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo, debería ver el panel de control.
 - El usuario y la contraseña inicial son "administrador". Se recomienda eliminar este usuario una vez se haya añadido otro.
 
 # CARACTERISTICAS
