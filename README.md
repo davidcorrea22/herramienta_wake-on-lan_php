@@ -1,12 +1,12 @@
 # HERRAMIENTA WAKE ON LAN + PHP + PYTHON
-Esta es una herramienta online creada para encender equipos de forma remota utilizando el protocolo Wake-on-LAN y los lenguajes PHP y Python.
-La herramienta crea una página web que actúa como panel de control a la que se puede acceder desde otros dispositivos además del servidor.
+Esta es una herramienta online creada para encender equipos de forma remota con el protocolo Wake-on-LAN y los lenguajes PHP y Python.
+La herramienta crea una página web en el puerto 80 que actúa como panel de control.
 Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la carpeta zip se descomprima en C:\PROYECTO_WOL.
 
 # REQUISITOS
-1. Instalar Docker Desktop: https://www.docker.com/products/docker-desktop
+1. Docker Desktop: https://www.docker.com/products/docker-desktop
 
-2. Tener al menos dos equipos:
+2. Al menos dos equipos:
     - Uno como servidor: Donde se hace la instalación de la herramienta.
     - Al menos un cliente: No necesitan ninguna instalación.
     - El cliente debe estar configurado para recibir páquetes mágicos: https://www.xataka.com/basics/wake-on-lan-que-como-configurarlo-windows-10
@@ -24,4 +24,11 @@ Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la
 
 4. Si todo se ha instalado correctamente. Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo, debería ver el panel de control.
 
-5. El usuario y la contraseña inicial son "administrador". Se recomienda eliminar este usuario una vez añadido uno propio.
+5. El usuario y la contraseña inicial son "administrador". Se recomienda eliminar este usuario una vez se haya añadido otro.
+
+# CARACTERISTICAS
+- Panel de control interactivo
+- Herramientas para añadir, borrar y editar equipos
+- Función para programar un encendido global
+- Administración de usuarios
+- Se puedes crean más usuarios, administradores o estándar.
