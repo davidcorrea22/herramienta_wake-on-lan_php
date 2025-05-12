@@ -1,32 +1,106 @@
-# HERRAMIENTA WAKE ON LAN + PHP + PYTHON
-Esta es una herramienta online creada para encender equipos de forma remota usando el protocolo Wake-on-LAN y los lenguajes PHP y Python.
-La herramienta crea una página web en el puerto 80 que actúa como panel de control, esta es accesible desde todos los equipos con conectividad al servidor.
-Esto incluye también dispositivos móviles.
-Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la carpeta zip se descomprima en C:\PROYECTO_WOL.
+# Herramienta Wake-on-LAN + PHP + Python
+Esta herramienta permite encender equipos de forma remota utilizando el protocolo Wake-on-LAN, combinado con un panel de control PHP y un servicio de envío de paquetes mágicos en Python.
 
-# REQUISITOS
-- Docker Desktop: https://www.docker.com/products/docker-desktop
-- Al menos dos equipos físicos (no máquinas virtuales):
-    - Uno como servidor: Donde se hace la instalación de la herramienta.
+# Componentes
+- Panel Web (PHP + Apache): Accesible desde cualquier navegador por el puerto 80. Permite administrar equipos, programación de encendido automático de equipos y usuarios.
+- API WOL (Python + Flask + Gunicorn): Servicio en el puerto 4000 encargado de enviar "magic packets".
+- Base de datos (MySQL): Almacena todos los datos de la herramienta.
+
+# Requisitos
+- Instalar Docker Desktop e iniciar sus servicios: https://www.docker.com/products/docker-desktop
+- Al menos dos equipos conectados por red Ethernet (no funciona en máquinas virtuales). Uno como servidor y otro como cliente:
     - Al menos un cliente: No necesitan ninguna instalación.
-    - El cliente debe estar configurado para recibir páquetes mágicos: https://www.xataka.com/basics/wake-on-lan-que-como-configurarlo-windows-10
+    - El cliente debe estar configurado para recibir paquetes mágicos: https://www.xataka.com/basics/wake-on-lan-que-como-configurarlo-windows-10
 
-- Habilite el puerto 80 en el equipo servidor. Puede usar este comando: netsh advfirewall firewall add rule name="Abrir puerto 80" dir=in action=allow protocol=TCP localport=80
-- Aseguresé de instalar este repositorio: git clone https://github.com/davidcorrea22/herramienta_wake-on-lan_php
+# Instalación
+- Habilite el puerto 80 en el equipo servidor. Para esto, puede usar este comando: 
+```bash
+netsh advfirewall firewall add rule name="Abrir puerto 80" dir=in action=allow protocol=TCP localport=80
+```
 
-# INSTALACIÓN
-- ⚠ PARA QUE LA HERRAMIENTA FUNCIONE. CAMBIE EL VALOR DE "BROADCAST_IP" EN EL ARCHIVO docker-compose.yml (línea 29). ESPECIFIQUE AHÍ LA DIRECCIÓN BROADCAST DE SU RED. ⚠
-- Asegurese que Docker esté activo.
-- Abra una terminal CMD, dirigase a C:\PROYECTO_WOL y levante el Docker usando: docker compose up --build
-- Acceda a http://localhost o http://{ip_del_equipo_servidor} desde cualquier equipo, debería ver el panel de control.
-- El usuario y la contraseña inicial son "administrador". Se recomienda eliminar este usuario una vez se haya añadido otro.
+- Descargue el código fuente: 
+```bash
+git clone https://github.com/davidcorrea22/herramienta_wake-on-lan_php.git
+```
 
-# CARACTERISTICAS
-- Panel de control interactivo
-- Herramientas para añadir, borrar y editar equipos
-- Función para programar un encendido global
-- Administración de usuarios
-- Se puedes crean más usuarios, administradores o estándar.
+- ⚠ EN DOCKER-COMPOSE.YML. CAMBIE EL VALOR DE "BROADCAST_IP". ESPECIFIQUE AHÍ LA DIRECCIÓN BROADCAST DE SU RED. ⚠
 
-# ADVERTENCIA
-- Esta heramienta está diseñada para ser instalada en equipos servidores que no vayan a apagarse con frecuencia. Si se reinicia el equipo servidor, REINICIE los contenedores, vuelva a levantarlos con docker compose up --build o ejecute manualmente el archivo init.sh o script_bucle.php para que la programación automática de encendido de equipos vuelva a funcionar.
+- Abra una terminal CMD, dirigase a C:\PROYECTO_WOL y levante los contenedores usando:
+```bash
+docker compose up -d --build
+```
+
+- Acceda al panel de control:
+	- Desde http://localhost o http://{ip_del_equipo_servidor}
+	- Los credenciales iniciales son: Usuario=administrador / Contraseña=administrador
+	- Por motivos de seguridad, se recomienda eliminar este usuario después de crear uno nuevo.
+
+# Carácteristicas
+- Accesible desde dispositivos móviles.
+- Gestión de dispositivos: Se pueden añadir, borrar y editar equipos informáticos.
+- Comprueba si los equipos de la base de datos están encendidos o apagados.
+- Encendido manual: Se puede elegir entre el botón "Encender" para un solo equipo o "Encender Todos" para un encendido global.
+- Programación de encendido: Define los días de la semana y la hora a la que se encenderán todos los equipos automaticamente.
+- Gestión de usuarios: Se pueden añadir, borrar y editar usuarios. Estos usuarios pueden ser administradores o usuarios estándar.
+- Sistema de logs accesible desde Docker Desktop.
+
+```yaml
+services:
+  db:
+    image: mysql:9.2
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: equipos
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "user", "-puserpassword"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+  wol:
+    build: ./wakeonlan
+    image: davidcorrea22/herramienta_wake-on-lan_php:wol
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      - BROADCAST_IP=192.168.25.255
+    networks:
+      - mynetwork
+    volumes:
+      - ./wakeonlan:/app
+  php:
+    build: ./php
+    image: davidcorrea22/herramienta_wake-on-lan_php:php
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - mynetwork
+    volumes:
+      - ./php:/var/www/html
+networks:
+  mynetwork:
+volumes:
+  db_data:
+```
+
+# Advertencias
+- Si reinicias el servidor, vuelva a levantar los contenedores para que la programación automática funcione de nuevo.
+- La programación automática usa el horario Madrid/España.
+- Los logs se pueden comprobar desde Docker Dekstop o usando:
+```bash
+  docker-compose logs 
+```
