@@ -27,3 +27,6 @@ Se recomienda que el servidor sea un equipo con Windows 10 o Windows 11 y que la
 - Función para programar un encendido global
 - Administración de usuarios
 - Se puedes crean más usuarios, administradores o estándar.
+
+# ADVERTENCIA
+- Esta heramienta está diseñada para ser instalada en equipos servidores que no vayan a apagarse con frecuencia. Si se reinicia el equipo servidor, REINICIE los contenedores, vuelva a levantarlos con docker compose up --build o ejecute manualmente el archivo init.sh o script_bucle.php para que la programación automática de encendido de equipos vuelva a funcionar.
