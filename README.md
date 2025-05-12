@@ -98,7 +98,7 @@ volumes:
 ```
 
 # Advertencias
-- Si reinicias el servidor, vuelva a levantar los contenedores para que la programación automática funcione de nuevo.
+- Si se apaga el servidor, vuelva a levantar los contenedores para que la programación automática funcione de nuevo.
 - La programación automática usa el horario Madrid/España.
 - Los logs se pueden comprobar desde Docker Dekstop o usando:
 ```bash
